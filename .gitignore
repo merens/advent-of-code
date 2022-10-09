@@ -1,5 +1,19 @@
 *.class
 *.log
-/.idea/
-/.bsp/
-/target/
+
+# metals
+.bloop/
+.metals/
+project/**/metals.sbt
+
+#sbt
+target/
+/project/**/target/
+
+.vscode/
+.git
+.bsp
+
+.idea
+/null/
+

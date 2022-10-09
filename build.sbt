@@ -1,3 +1,3 @@
 name := "advent of code"
 
-scalaVersion := "2.13.6"
+scalaVersion := "2.13.9"
