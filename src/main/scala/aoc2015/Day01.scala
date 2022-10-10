@@ -1,7 +1,5 @@
 package aoc2015
 
-import utils.IteratorImplicits._
-
 import scala.collection.mutable
 
 object Day01 {
