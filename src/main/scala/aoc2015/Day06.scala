@@ -2,8 +2,8 @@ package aoc2015
 
 object Day06 {
 
-  // TODO: better way to handle the map of lights
-  val startingMap: Map[(Int, Int), Int] = (0 to 1000).flatMap(x => (0 to 999).map((x, _) )).map(e => e -> 0).toMap
+  // TODO: better way to handle the matrix of lights
+  val startingMap: Map[(Int, Int), Int] = (0 to 999).flatMap(x => (0 to 999).map((x, _) )).map(e => e -> 0).toMap
 
   // TODO: efficiency? I'm using a lot of recursion and a lot of immutable maps
   def light(instructions: Seq[String], map: Map[(Int, Int), Int]): Map[(Int, Int), Int] =
