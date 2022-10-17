@@ -2,18 +2,19 @@ package aoc2015
 
 object Day02 {
 
-  def misurePaper(dimensionList: Seq[Seq[Int]]): Seq[Int] =
+  // Note: foldLeft is the same as scanLeft()().last
+  def misurePaper(dimensionList: Seq[Seq[Int]]): Int =
     dimensionList
-      .scanLeft(0) { (paper, dimensions) =>
+      .foldLeft(0) { (paper, dimensions) =>
         dimensions match {
           case Seq(l: Int, w: Int, h: Int) => paper + surfaceArea(l, w, h) + smallestSide(l, w, h)
           case _                           => throw new IllegalArgumentException("illegal dimension")
         }
       }
 
-  def misureRibbon(dimensionList: Seq[Seq[Int]]): Seq[Int] =
+  def misureRibbon(dimensionList: Seq[Seq[Int]]): Int =
     dimensionList
-      .scanLeft(0) { (paper, dimensions) =>
+      .foldLeft(0) { (paper, dimensions) =>
         dimensions match {
           case Seq(l: Int, w: Int, h: Int) => paper + volume(l, w, h) + smallestPerimeter(l, w, h)
           case _                           => throw new IllegalArgumentException("illegal dimension")
@@ -37,7 +38,7 @@ object Day02 {
   lazy val input: String = io.Source.fromInputStream(getClass.getResourceAsStream("day02.txt")).mkString.trim
 
   def main(args: Array[String]): Unit = {
-    println(misurePaper(parseInput(input)).last)
-    println(misureRibbon(parseInput(input)).last)
+    println(misurePaper(parseInput(input)))
+    println(misureRibbon(parseInput(input)))
   }
 }

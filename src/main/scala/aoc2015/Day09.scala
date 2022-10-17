@@ -24,13 +24,12 @@ object Day09 {
 
   def createGraph(rows: Seq[String]): WeightedGraph =
     rows
-      .scanLeft(WeightedGraph(Set.empty)) { (graph, row: String) =>
+      .foldLeft(WeightedGraph(Set.empty)) { (graph, row: String) =>
         row match {
           case s"$from to $to = $n" => addNode(graph, from, to, n.toInt)
           case _                    => throw new IllegalArgumentException("parsing error")
         }
       }
-      .last
   // parse input
   // save graph info:  map or list of neighbours for every node? and the cost?
   //  www.scala-graph.org seems interesting
