@@ -10,12 +10,7 @@ object Day12 {
     "-?\\d+".r.findAllIn(s.replaceAll("\"", "")).map(_.toInt).toSeq
   }
 
-  def removeRed(s: String): String = {
-//    "\\{[^\\{]*?:\"red\"[^\\{]*?\\}".r.findAllMatchIn(s).toSeq.foreach(println)
-    println("\\{[^\\{]*?:\"red\"[^\\{]*?\\}".r.findFirstIn(s))
-    s.replaceFirst("\\{[^\\{\\}]*?:\"red\"[^\\{]*?\\}", "")
-    // this regex does not match only elements with property == red
-  }
+  // could not find a pattern match to do what I need
 
   // alternative: parse json and work with dictionaries
   //  https://www.reddit.com/r/adventofcode/comments/pffhut/2015_day_12_part_2_python_i_am_trying_to/hb461u6/
