@@ -43,7 +43,7 @@ object Day09 {
 
   def createGraph2(rows: Seq[String]): Graph[String] =
     rows
-      .scanLeft(Map.empty[String, Map[String, Int]].withDefaultValue(Map.empty[String, Int])) { (graph, row: String) =>
+      .foldLeft(Map.empty[String, Map[String, Int]].withDefaultValue(Map.empty[String, Int])) { (graph, row: String) =>
         row match {
           case s"$from to $to = $n" =>
             graph +
@@ -52,7 +52,6 @@ object Day09 {
           case _ => throw new IllegalArgumentException("parsing error")
         }
       }
-      .last
 
   def allPaths(g: Graph[String]): Seq[Seq[String]] =
     g.keySet.toVector.permutations.toSeq
