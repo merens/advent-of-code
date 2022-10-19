@@ -8,16 +8,6 @@ object Day18 {
 
   // Game of Life
 
-//  case class Grid(config: Seq[Seq[Int]]){
-//    override def toString: String = config.mkString("\n")
-//  }
-
-//  def neighbours(x: Int, y: Int): Seq[(Int, Int)] =
-//    (-1 to 1)
-//      .flatMap(a => (-1 to 1)
-//      .map(b => if (a == b && a == 0) None else Some(a, b) ))
-//      .flatten
-
   def parseGrid(input: String): Grid[Boolean] =
     input.linesIterator
       .map(_.toVector)
@@ -28,15 +18,6 @@ object Day18 {
         case e   => throw new IllegalArgumentException(s"error parsing grid: $e")
       })
 
-//  def addFrame(g: Grid): Grid = {
-//    val row: Seq[Int] = Seq.fill(g.config.head.size + 2)(-1)
-//    Grid(
-//      g.config
-//        .map(_.prepended(-1).appended(-1))
-//        .prepended(row)
-//        .appended(row)
-//    )
-//  }
   def animate(pos: Pos, grid: Grid[Boolean]): Boolean = {
     val neighbours = Pos.allNeighbours
       .map(_ + pos)
@@ -56,7 +37,14 @@ object Day18 {
       .map(_.toVector)
       .toVector
       .map(_.map(animate(_, grid)))
-      .transpose
+      .transpose // why is it inverted?
+
+  def lightCorners(grid: Grid[Boolean]): Grid[Boolean] = {
+    val corners = Seq(Pos(0, 0), Pos(0, grid.size - 1), Pos(grid.head.size - 1, 0), Pos(grid.head.size - 1, grid.size - 1))
+    corners.foldLeft(grid)((updated, corner) => updated.updateGrid(corner, true))
+  }
+
+  def part2(grid: Grid[Boolean]): Grid[Boolean] = lightCorners(step(grid))
 
   def printGrid(grid: Grid[Boolean]): Unit =
     grid.indices.foreach { x =>
@@ -70,5 +58,6 @@ object Day18 {
     val startingGrid = parseGrid(input)
 //    println(printGrid(startingGrid))
     println(repeated(step, 100)(startingGrid).countGrid(_ == true))
+    println(repeated(part2, 100)(lightCorners(startingGrid)).countGrid(_ == true))
   }
 }

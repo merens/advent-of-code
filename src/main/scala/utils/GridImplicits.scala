@@ -9,6 +9,9 @@ object GridImplicits {
       0 <= pos.x && 0 <= pos.y && pos.y < grid.size && pos.x < grid(pos.y).size
     }
 
+    def updateGrid(pos: Pos, elem: A): Grid[A] =
+      grid.updated(pos.y, grid(pos.y).updated(pos.x, elem))
+
     def countGrid(p: A => Boolean): Int = grid.map(_.count(p)).sum
   }
 }
