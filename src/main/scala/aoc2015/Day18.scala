@@ -19,7 +19,7 @@ object Day18 {
       })
 
   def animate(pos: Pos, grid: Grid[Boolean]): Boolean = {
-    val neighbours = Pos.allNeighbours
+    val neighbours = Pos.allNeighbours  // alternative: use "empty" borders
       .map(_ + pos)
       .filter(p => grid.containsPos(p))
       .count(grid(_) == true)

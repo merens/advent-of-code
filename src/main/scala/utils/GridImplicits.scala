@@ -2,6 +2,7 @@ package utils
 
 object GridImplicits {
 
+  // from https://github.com/sim642/adventofcode/blob/master/src/main/scala/eu/sim642/adventofcodelib/GridImplicits.scala
   implicit class GridOps[A](grid: Grid[A]) {
     def apply(pos: Pos): A = grid(pos.y)(pos.x)
 
