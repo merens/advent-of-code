@@ -7,7 +7,7 @@ class Day19Test extends AnyFunSuite {
     val input: String = "HOH"
     val map           = Map("H" -> Seq("HO", "OH"), "O" -> Seq("HH"))
     val expected      = Seq("HOOH", "HOHO")
-    val actual        = Day19.generate(input, "H", map("H").head)
+    val actual        = Day19.replace(input, "H", map("H").head)
     println(actual)
     assert(actual.equals(expected))
   }
