@@ -11,7 +11,7 @@ object Day21 {
   }
   case class Weapon(cost: Int, dmg: Int, armor: Int)
   case class Armor(cost: Int, dmg: Int, armor: Int)
-
+  // TODO: all shop classes are similar, trait or only one class?
   case class Ring(cost: Int, dmg: Int, armor: Int) {
     def +(that: Ring): Ring = Ring(cost + that.cost, dmg + that.dmg, armor + that.armor)
   }
