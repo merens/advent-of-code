@@ -46,10 +46,10 @@ object Day07 {
         val value = eval(mutWires(name))
         mutWires(name) = Const(value)
         value
-      case Not(e)        => ~eval(e) & 0xffff
+      case Not(e)        => ~eval(e)
       case And(l, r)     => eval(l) & eval(r)
       case Or(l, r)      => eval(l) | eval(r)
-      case LShift(e, by) => (eval(e) << by) & 0xffff
+      case LShift(e, by) => eval(e) << by
       case RShift(e, by) => eval(e) >> by
     }
 
