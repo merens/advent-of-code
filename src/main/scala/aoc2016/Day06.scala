@@ -1,7 +1,5 @@
 package aoc2016
 
-import scala.annotation.tailrec
-
 object Day06 {
 
   def mostCommonChar(seq: Seq[Char]): Char =
