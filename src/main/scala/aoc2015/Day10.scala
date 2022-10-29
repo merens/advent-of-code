@@ -1,7 +1,5 @@
 package aoc2015
 
-import scala.::
-
 object Day10 {
 
   def look(s: String, seq: Seq[Char]): Seq[Int] = {
