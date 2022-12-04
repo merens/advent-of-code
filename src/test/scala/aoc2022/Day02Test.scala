@@ -5,7 +5,7 @@ import org.scalatest.funsuite.AnyFunSuite
 class Day02Test extends AnyFunSuite {
   val INPUT: String = "A Y\nB X\nC Z"
 
-  val moves: Seq[Seq[Char]] = Seq(
+  val MOVES: Seq[Seq[Char]] = Seq(
     Seq('A', 'Y'),
     Seq('B', 'X'),
     Seq('C', 'Z')
@@ -13,7 +13,7 @@ class Day02Test extends AnyFunSuite {
 
 
   test("parsing") {
-    assert(moves.equals(Day02.parseInput(INPUT)))
+    assert(MOVES.equals(Day02.parseInput(INPUT)))
   }
 
   test("rock paper scissors") {

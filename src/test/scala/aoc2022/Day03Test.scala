@@ -7,7 +7,7 @@ class Day03Test extends AnyFunSuite {
   val INPUT: String =
     "vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw"
 
-  val compartments: Seq[String] = Seq(
+  val COMPARTMENTS: Seq[String] = Seq(
     "vJrwpWtwJgWrhcsFMMfFFhFp",
     "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
     "PmmdzqPrVvPwwTWBwg",
@@ -17,21 +17,21 @@ class Day03Test extends AnyFunSuite {
   )
 
   test("parsing") {
-    assert(compartments.equals(Day03.parseInput(INPUT)))
+    assert(COMPARTMENTS.equals(Day03.parseInput(INPUT)))
   }
 
   test("find duplicates in compartments") {
-    assert('p'.equals(Day03.findDuplicateCompartments(compartments.head)))
-    assert('L'.equals(Day03.findDuplicateCompartments(compartments(1))))
-    assert('P'.equals(Day03.findDuplicateCompartments(compartments(2))))
-    assert('v'.equals(Day03.findDuplicateCompartments(compartments(3))))
-    assert('t'.equals(Day03.findDuplicateCompartments(compartments(4))))
-    assert('s'.equals(Day03.findDuplicateCompartments(compartments.last)))
+    assert('p'.equals(Day03.findDuplicateCompartments(COMPARTMENTS.head)))
+    assert('L'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(1))))
+    assert('P'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(2))))
+    assert('v'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(3))))
+    assert('t'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(4))))
+    assert('s'.equals(Day03.findDuplicateCompartments(COMPARTMENTS.last)))
   }
 
   test("find duplicates in a group of three compartments") {
-    assert('r'.equals(Day03.findDuplicateGroup(compartments.take(3))))
-    assert('Z'.equals(Day03.findDuplicateGroup(compartments.takeRight(3))))
+    assert('r'.equals(Day03.findDuplicateGroup(COMPARTMENTS.take(3))))
+    assert('Z'.equals(Day03.findDuplicateGroup(COMPARTMENTS.takeRight(3))))
   }
 
   test("calculate priority") {
@@ -47,8 +47,8 @@ class Day03Test extends AnyFunSuite {
   }
 
   test("totals") {
-    assert(157.equals(Day03.part1(compartments)))
-    assert(70.equals(Day03.part2(compartments)))
+    assert(157.equals(Day03.part1(COMPARTMENTS)))
+    assert(70.equals(Day03.part2(COMPARTMENTS)))
   }
 
 }
