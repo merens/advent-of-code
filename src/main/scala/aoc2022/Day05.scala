@@ -5,7 +5,7 @@ import scala.util.matching.Regex
 object Day05 {
 
   //  example: move 3 from 7 to 4
-  val instructionRegex: Regex   = """move (\d+) from (\d) to (\d)""".r
+  val instructionRegex: Regex = """move (\d+) from (\d) to (\d)""".r
 
   def encodeArrangement(arrangement: Seq[Seq[String]]): String =
     arrangement.map(_.head).mkString
@@ -13,9 +13,6 @@ object Day05 {
   def execute(initialArrangement: Seq[Seq[String]], instructions: Seq[String], isReversed: Boolean): Seq[Seq[String]] =
     instructions
       .foldLeft(initialArrangement)((config, instruction) => moveCargo(config, instruction, isReversed))
-
-  def execAndEncode(initialArrangement: Seq[Seq[String]], instructions: Seq[String], isReversed: Boolean): String =
-    encodeArrangement(execute(initialArrangement, instructions, isReversed))
 
   def moveCargo(config: Seq[Seq[String]], instruction: String, isReversed: Boolean): Seq[Seq[String]] =
     instruction match {
@@ -35,7 +32,11 @@ object Day05 {
       case e                         => throw new IllegalArgumentException(s"error parsing instructions: $e")
     }
 
-  def parseInstructions(input: String): Seq[String] = input.linesIterator.toSeq
+  def part1(initialArrangement: Seq[Seq[String]], instructions: Seq[String]): String =
+    encodeArrangement(execute(initialArrangement, instructions, isReversed = true))
+
+  def part2(initialArrangement: Seq[Seq[String]], instructions: Seq[String]): String =
+    encodeArrangement(execute(initialArrangement, instructions, isReversed = false))
 
   def parseCargo(input: Seq[String]): Seq[Seq[String]] =
     input.transpose
@@ -44,9 +45,10 @@ object Day05 {
       .filter(_._2 % 4 == 1)
       .map(_._1)
       // filter out numbers and empty spaces
-      .map(_.filter(_.isUpper)
+      .map(
+        _.filter(_.isUpper)
         // it's faster on Seq(String) than on Seq(Char)
-        .map(_.toString)
+          .map(_.toString)
       )
 
   lazy val input: Seq[String] =
@@ -54,7 +56,7 @@ object Day05 {
 
   def main(args: Array[String]): Unit = {
     val (cargoInput, instructionsInput): (Seq[String], Seq[String]) = input.splitAt(input.indexOf(""))
-    println(execAndEncode(parseCargo(cargoInput), instructionsInput, isReversed = true))
-    println(execAndEncode(parseCargo(cargoInput), instructionsInput, isReversed = false))
+    println(part1(parseCargo(cargoInput), instructionsInput))
+    println(part2(parseCargo(cargoInput), instructionsInput))
   }
 }
