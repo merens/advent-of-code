@@ -4,23 +4,8 @@ import scala.util.matching.Regex
 
 object Day05 {
 
-  //  val cargoRegex: Regex = """\[(\w)]""".r
   //  example: move 3 from 7 to 4
   val instructionRegex: Regex   = """move (\d+) from (\d) to (\d)""".r
-  val doubleNewLineRegex: Regex = """(\r\n|\n|\r)\1""".r
-
-  // TODO: parse from file instead of using hardcoded input
-  val cargos: Seq[Seq[String]] = Seq(
-    Seq("T", "F", "V", "Z", "C", "W", "S", "Q"),
-    Seq("B", "R", "Q"),
-    Seq("S", "M", "P", "Q", "T", "Z", "B"),
-    Seq("H", "Q", "R", "F", "V", "D"),
-    Seq("P", "T", "S", "B", "D", "L", "G", "J"),
-    Seq("Z", "T", "R", "W"),
-    Seq("J", "R", "F", "S", "N", "M", "Q", "H"),
-    Seq("W", "H", "F", "N", "R"),
-    Seq("B", "R", "P", "Q", "T", "Z", "J")
-  )
 
   def encodeArrangement(arrangement: Seq[Seq[String]]): String =
     arrangement.map(_.head).mkString
@@ -46,18 +31,30 @@ object Day05 {
         config
           .updated(firstStackIndex, newFirstStack)
           .updated(secondStackIndex, newSecondStack)
+      case ""                        => config
       case e                         => throw new IllegalArgumentException(s"error parsing instructions: $e")
     }
 
-  //  def parseArrangementuration(input: String) = input.linesIterator.toSeq
-
   def parseInstructions(input: String): Seq[String] = input.linesIterator.toSeq
 
-  lazy val input: String = io.Source.fromInputStream(getClass.getResourceAsStream("day05.txt")).mkString.trim
+  def parseCargo(input: Seq[String]): Seq[Seq[String]] =
+    input.transpose
+      // input has fixed size and every 4 spaces there is a cargo stack
+      .zipWithIndex
+      .filter(_._2 % 4 == 1)
+      .map(_._1)
+      // filter out numbers and empty spaces
+      .map(_.filter(_.isUpper)
+        // it's faster on Seq(String) than on Seq(Char)
+        .map(_.toString)
+      )
+
+  lazy val input: Seq[String] =
+    io.Source.fromInputStream(getClass.getResourceAsStream("day05.txt")).mkString.trim.linesIterator.toSeq
 
   def main(args: Array[String]): Unit = {
-    val instructions = parseInstructions(input.split(doubleNewLineRegex.toString).toSeq.last)
-    println(execAndEncode(cargos, instructions, isReversed = true))
-    println(execAndEncode(cargos, instructions, isReversed = false))
+    val (cargoInput, instructionsInput): (Seq[String], Seq[String]) = input.splitAt(input.indexOf(""))
+    println(execAndEncode(parseCargo(cargoInput), instructionsInput, isReversed = true))
+    println(execAndEncode(parseCargo(cargoInput), instructionsInput, isReversed = false))
   }
 }
