@@ -4,63 +4,60 @@ import scala.util.matching.Regex
 
 object Day05 {
 
+  //  val cargoRegex: Regex = """\[(\w)]""".r
   //  example: move 3 from 7 to 4
-  val instructionRegex: Regex = """move (\d+) from (\d) to (\d)""".r
+  val instructionRegex: Regex   = """move (\d+) from (\d) to (\d)""".r
+  val doubleNewLineRegex: Regex = """(\r\n|\n|\r)\1""".r
 
   // TODO: parse from file instead of using hardcoded input
-  val cargos: Map[Int, Seq[String]] = Map(
-    1 -> Seq("T", "F", "V", "Z", "C", "W", "S", "Q"),
-    2 -> Seq("B", "R", "Q"),
-    3 -> Seq("S", "M", "P", "Q", "T", "Z", "B"),
-    4 -> Seq("H", "Q", "R", "F", "V", "D"),
-    5 -> Seq("P", "T", "S", "B", "D", "L", "G", "J"),
-    6 -> Seq("Z", "T", "R", "W"),
-    7 -> Seq("J", "R", "F", "S", "N", "M", "Q", "H"),
-    8 -> Seq("W", "H", "F", "N", "R"),
-    9 -> Seq("B", "R", "P", "Q", "T", "Z", "J")
+  val cargos: Seq[Seq[String]] = Seq(
+    Seq("T", "F", "V", "Z", "C", "W", "S", "Q"),
+    Seq("B", "R", "Q"),
+    Seq("S", "M", "P", "Q", "T", "Z", "B"),
+    Seq("H", "Q", "R", "F", "V", "D"),
+    Seq("P", "T", "S", "B", "D", "L", "G", "J"),
+    Seq("Z", "T", "R", "W"),
+    Seq("J", "R", "F", "S", "N", "M", "Q", "H"),
+    Seq("W", "H", "F", "N", "R"),
+    Seq("B", "R", "P", "Q", "T", "Z", "J")
   )
 
-  case class Config(config: Map[Int, Seq[String]])
+  def encodeArrangement(arrangement: Seq[Seq[String]]): String =
+    arrangement.map(_.head).mkString
 
-  def part1(initialConfig: Config, instructions: Seq[String]): String = {
-    val result =
-      instructions.foldLeft(initialConfig)((config, instruction) => moveCargoReversed(config, instruction)).config
-    (1 to 9).map(result(_)).map(_.head).mkString
-  }
+  def execute(initialArrangement: Seq[Seq[String]], instructions: Seq[String], isReversed: Boolean): Seq[Seq[String]] =
+    instructions
+      .foldLeft(initialArrangement)((config, instruction) => moveCargo(config, instruction, isReversed))
 
-  def part2(initialConfig: Config, instructions: Seq[String]): String = {
-    val result =
-      instructions.foldLeft(initialConfig)((config, instruction) => moveCargo(config, instruction)).config
-    (1 to 9).map(result(_)).map(_.head).mkString
-  }
+  def execAndEncode(initialArrangement: Seq[Seq[String]], instructions: Seq[String], isReversed: Boolean): String =
+    encodeArrangement(execute(initialArrangement, instructions, isReversed))
 
-  def moveCargoReversed(config: Config, instruction: String): Config =
+  def moveCargo(config: Seq[Seq[String]], instruction: String, isReversed: Boolean): Seq[Seq[String]] =
     instruction match {
       case instructionRegex(a, b, c) =>
-        val toBeMoved = config.config(b.toInt).take(a.toInt).reverse
-        val newC      = config.config(c.toInt).prependedAll(toBeMoved)
-        val newB      = config.config(b.toInt).drop(a.toInt)
-        Config(config.config + (b.toInt -> newB) + (c.toInt -> newC))
+        val quantity         = a.toInt
+        val firstStackIndex  = b.toInt - 1
+        val secondStackIndex = c.toInt - 1
+        val stackToBeMoved   =
+          if (isReversed) config(firstStackIndex).take(quantity).reverse
+          else config(firstStackIndex).take(quantity)
+        val newSecondStack   = config(secondStackIndex).prependedAll(stackToBeMoved)
+        val newFirstStack    = config(firstStackIndex).drop(quantity)
+        config
+          .updated(firstStackIndex, newFirstStack)
+          .updated(secondStackIndex, newSecondStack)
+      case e                         => throw new IllegalArgumentException(s"error parsing instructions: $e")
     }
 
-  def moveCargo(config: Config, instruction: String): Config =
-    instruction match {
-      case instructionRegex(a, b, c) =>
-        val toBeMoved = config.config(b.toInt).take(a.toInt)
-        val newC      = config.config(c.toInt).prependedAll(toBeMoved)
-        val newB      = config.config(b.toInt).drop(a.toInt)
-        Config(config.config + (b.toInt -> newB) + (c.toInt -> newC))
-    }
-
+  //  def parseArrangementuration(input: String) = input.linesIterator.toSeq
 
   def parseInstructions(input: String): Seq[String] = input.linesIterator.toSeq
 
   lazy val input: String = io.Source.fromInputStream(getClass.getResourceAsStream("day05.txt")).mkString.trim
 
   def main(args: Array[String]): Unit = {
-    val regex        = """(\r\n|\n|\r)\1""".r
-    val instructions = parseInstructions(input.split(regex.toString()).toSeq.last)
-    println(part1(Config(cargos), instructions))
-    println(part2(Config(cargos), instructions))
+    val instructions = parseInstructions(input.split(doubleNewLineRegex.toString).toSeq.last)
+    println(execAndEncode(cargos, instructions, isReversed = true))
+    println(execAndEncode(cargos, instructions, isReversed = false))
   }
 }
