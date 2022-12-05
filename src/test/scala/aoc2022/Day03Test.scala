@@ -1,6 +1,8 @@
 package aoc2022
 
+import aoc2022.Day03._
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class Day03Test extends AnyFunSuite {
 
@@ -17,38 +19,38 @@ class Day03Test extends AnyFunSuite {
   )
 
   test("parsing") {
-    assert(COMPARTMENTS.equals(Day03.parseInput(INPUT)))
+    parseInput(INPUT) shouldBe COMPARTMENTS
   }
 
   test("find duplicates in compartments") {
-    assert('p'.equals(Day03.findDuplicateCompartments(COMPARTMENTS.head)))
-    assert('L'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(1))))
-    assert('P'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(2))))
-    assert('v'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(3))))
-    assert('t'.equals(Day03.findDuplicateCompartments(COMPARTMENTS(4))))
-    assert('s'.equals(Day03.findDuplicateCompartments(COMPARTMENTS.last)))
+    findDuplicateCompartments(COMPARTMENTS.head) shouldBe 'p'
+    findDuplicateCompartments(COMPARTMENTS(1)) shouldBe 'L'
+    findDuplicateCompartments(COMPARTMENTS(2)) shouldBe 'P'
+    findDuplicateCompartments(COMPARTMENTS(3)) shouldBe 'v'
+    findDuplicateCompartments(COMPARTMENTS(4)) shouldBe 't'
+    findDuplicateCompartments(COMPARTMENTS.last) shouldBe 's'
   }
 
   test("find duplicates in a group of three compartments") {
-    assert('r'.equals(Day03.findDuplicateGroup(COMPARTMENTS.take(3))))
-    assert('Z'.equals(Day03.findDuplicateGroup(COMPARTMENTS.takeRight(3))))
+    findDuplicateGroup(COMPARTMENTS.take(3)) shouldBe 'r'
+    findDuplicateGroup(COMPARTMENTS.takeRight(3)) shouldBe 'Z'
   }
 
   test("calculate priority") {
-    assert(16.equals(Day03.calcPriority('p')))
-    assert(38.equals(Day03.calcPriority('L')))
-    assert(42.equals(Day03.calcPriority('P')))
-    assert(22.equals(Day03.calcPriority('v')))
-    assert(20.equals(Day03.calcPriority('t')))
-    assert(19.equals(Day03.calcPriority('s')))
+    calcPriority('p') shouldBe 16
+    calcPriority('L') shouldBe 38
+    calcPriority('P') shouldBe 42
+    calcPriority('v') shouldBe 22
+    calcPriority('t') shouldBe 20
+    calcPriority('s') shouldBe 19
 
-    assert(18.equals(Day03.calcPriority('r')))
-    assert(52.equals(Day03.calcPriority('Z')))
+    calcPriority('r') shouldBe 18
+    calcPriority('Z') shouldBe 52
   }
 
   test("totals") {
-    assert(157.equals(Day03.part1(COMPARTMENTS)))
-    assert(70.equals(Day03.part2(COMPARTMENTS)))
+    part1(COMPARTMENTS) shouldBe 157
+    part2(COMPARTMENTS) shouldBe 70
   }
 
 }

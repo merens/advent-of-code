@@ -1,6 +1,8 @@
 package aoc2022
 
+import aoc2022.Day04._
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class Day04Test extends AnyFunSuite {
 
@@ -17,33 +19,33 @@ class Day04Test extends AnyFunSuite {
   )
 
   test("parsing") {
-    assert(SECTIONS.equals(Day04.parseInput(INPUT)))
+    SECTIONS shouldBe parseInput(INPUT)
   }
 
   test("check concentric sections") {
-    assert(!Day04.sectionsAreConcentric(2, 4, 6, 8))
-    assert(!Day04.sectionsAreConcentric(2, 3, 4, 5))
-    assert(!Day04.sectionsAreConcentric(5, 7, 7, 9))
-    assert(Day04.sectionsAreConcentric(2, 8, 3, 7))
-    assert(Day04.sectionsAreConcentric(6, 6, 4, 6))
-    assert(!Day04.sectionsAreConcentric(2, 6, 4, 8))
+    assert(!sectionsAreConcentric(2, 4, 6, 8))
+    assert(!sectionsAreConcentric(2, 3, 4, 5))
+    assert(!sectionsAreConcentric(5, 7, 7, 9))
+    assert(sectionsAreConcentric(2, 8, 3, 7))
+    assert(sectionsAreConcentric(6, 6, 4, 6))
+    assert(!sectionsAreConcentric(2, 6, 4, 8))
   }
 
   test("total part 1") {
-    assert(2.equals(Day04.part1(SECTIONS)))
+    part1(SECTIONS) shouldBe 2
   }
 
   test("count overlap sections") {
-    assert(!Day04.sectionAreOverlapping(2, 4, 6, 8))
-    assert(!Day04.sectionAreOverlapping(2, 3, 4, 5))
-    assert(Day04.sectionAreOverlapping(5, 7, 7, 9))
-    assert(Day04.sectionAreOverlapping(2, 8, 3, 7))
-    assert(Day04.sectionAreOverlapping(6, 6, 4, 6))
-    assert(Day04.sectionAreOverlapping(2, 6, 4, 8))
+    assert(!sectionAreOverlapping(2, 4, 6, 8))
+    assert(!sectionAreOverlapping(2, 3, 4, 5))
+    assert(sectionAreOverlapping(5, 7, 7, 9))
+    assert(sectionAreOverlapping(2, 8, 3, 7))
+    assert(sectionAreOverlapping(6, 6, 4, 6))
+    assert(sectionAreOverlapping(2, 6, 4, 8))
   }
 
   test("total part 2") {
-    assert(4.equals(Day04.part2(SECTIONS)))
+    part2(SECTIONS) shouldBe 4
   }
 
 }

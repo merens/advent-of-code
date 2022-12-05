@@ -1,13 +1,15 @@
 package aoc2016
 
+import aoc2016.Day07.{ countAbbaInBrackets, countSupportSsl, countSupportTls }
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
 class Day07Test extends AnyFunSuite {
   test("count abba in brackets") {
-    assert(Day07.countAbbaInBrackets("abba[mnop]qrst").equals(0))
-    assert(Day07.countAbbaInBrackets("abcd[bddb]xyyx").equals(1))
-    assert(Day07.countAbbaInBrackets("aaaa[qwer]tyui").equals(0))
-    assert(Day07.countAbbaInBrackets("ioxxoj[asdfgh]zxcvbn").equals(0))
+    countAbbaInBrackets("abba[mnop]qrst") shouldBe 0
+    countAbbaInBrackets("abcd[bddb]xyyx") shouldBe 1
+    countAbbaInBrackets("aaaa[qwer]tyui") shouldBe 0
+    countAbbaInBrackets("ioxxoj[asdfgh]zxcvbn") shouldBe 0
   }
 
   test("address support tls") {
@@ -17,7 +19,7 @@ class Day07Test extends AnyFunSuite {
       "aaaa[qwer]tyui",
       "ioxxoj[asdfgh]zxcvbn"
     )
-    assert(Day07.countSupportTls(addresses).equals(2))
+    countSupportTls(addresses) shouldBe 2
   }
 
 //  test("count aba-bab in brackets") {
@@ -34,7 +36,7 @@ class Day07Test extends AnyFunSuite {
       "aaa[kek]eke",
       "zazbz[bzb]cdb"
     )
-    assert(Day07.countSupportSsl(addresses).equals(3))
+    countSupportSsl(addresses) shouldBe 3
   }
 
 }
