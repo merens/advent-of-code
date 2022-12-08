@@ -42,6 +42,7 @@ object Day07 {
           case changeDirectoryRegex(name)    => (tree, wd :+ name)
           case directoryRegex(directoryName) => (addChild(wd, tree, Dir(directoryName, None, Seq())), wd)
           case fileRegex(size, fileName)     => (addChild(wd, tree, File(fileName, size.toInt)), wd)
+          // match doesn't like regex without groups
           case "$ ls"                        => (tree, wd)
           case "$ cd .."                     => (tree, wd.init)
           case "$ cd /"                      => (tree, wd :+ "/")
@@ -59,6 +60,7 @@ object Day07 {
     case e                                                        => throw new Error(s"error adding child: $e")
   }
 
+  // there has to be a way to fill size while parsing
   def assignSize(tree: Tree): Tree = tree match {
     case d: Dir if d.size.isEmpty   =>
       d.copy(

@@ -25,22 +25,22 @@ object Day02 {
   def nextPos(position: Pos, instruction: Char): Pos =
     instruction match {
       case 'U' =>
-        Pos(position.x, Math.max(0, position.y - 1))
-      case 'D' =>
-        Pos(position.x, Math.min(2, position.y + 1))
-      case 'L' =>
         Pos(Math.max(0, position.x - 1), position.y)
-      case 'R' =>
+      case 'D' =>
         Pos(Math.min(2, position.x + 1), position.y)
+      case 'L' =>
+        Pos(position.x, Math.max(0, position.y - 1))
+      case 'R' =>
+        Pos(position.x, Math.min(2, position.y + 1))
       case e   => throw new IllegalArgumentException(s"error: $e")
     }
 
   def nextPosPart2(position: Pos, instruction: Char): Pos = {
     val newPos = instruction match {
-      case 'U' => Pos(position.x, position.y - 1)
-      case 'D' => Pos(position.x, position.y + 1)
-      case 'L' => Pos(position.x - 1, position.y)
-      case 'R' => Pos(position.x + 1, position.y)
+      case 'U' => Pos(position.x - 1, position.y)
+      case 'D' => Pos(position.x + 1, position.y)
+      case 'L' => Pos(position.x, position.y - 1)
+      case 'R' => Pos(position.x, position.y + 1)
       case e => throw new IllegalArgumentException(s"error: $e")
     }
     if (allowedValues.contains(newPos)) newPos else position

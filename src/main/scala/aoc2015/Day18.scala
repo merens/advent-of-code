@@ -37,7 +37,7 @@ object Day18 {
       .map(_.toVector)
       .toVector
       .map(_.map(animate(_, grid)))
-      .transpose // why is it inverted?
+//      .transpose // why is it inverted? maybe it was def apply(pos: Pos): A = grid(pos.y)(pos.x) in GridImplicits
 
   def lightCorners(grid: Grid[Boolean]): Grid[Boolean] = {
     val corners = Seq(Pos(0, 0), Pos(0, grid.size - 1), Pos(grid.head.size - 1, 0), Pos(grid.head.size - 1, grid.size - 1))

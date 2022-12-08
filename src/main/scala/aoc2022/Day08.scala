@@ -37,6 +37,7 @@ object Day08 {
           .map(Pos(x, _))
       )
       .map { pos: Pos =>
+        // TODO: Stop checking other directions if I get a 0
         viewingDistance(grid(pos.x).take(pos.y).reverse, grid(pos)) *
           viewingDistance(grid(pos.x).drop(pos.y + 1), grid(pos)) *
           viewingDistance(transpose(pos.y).take(pos.x).reverse, grid(pos)) *

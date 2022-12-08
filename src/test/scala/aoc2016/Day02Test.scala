@@ -7,11 +7,11 @@ import utils.Pos
 
 class Day02Test extends AnyFunSuite {
   test("instructions") {
-    nextPos(Pos(1, 1), 'U') shouldBe Pos(1, 0)
-    nextPos(Pos(1, 1), 'L') shouldBe Pos(0, 1)
+    nextPos(Pos(1, 1), 'U') shouldBe Pos(0, 1)
+    nextPos(Pos(1, 1), 'L') shouldBe Pos(1, 0)
     nextPos(Pos(0, 0), 'L') shouldBe Pos(0, 0)
-    nextPos(Pos(1, 1), 'D') shouldBe Pos(1, 2)
-    nextPos(Pos(1, 1), 'R') shouldBe Pos(2, 1)
+    nextPos(Pos(1, 1), 'D') shouldBe Pos(2, 1)
+    nextPos(Pos(1, 1), 'R') shouldBe Pos(1, 2)
   }
 
   test("line instruction") {
