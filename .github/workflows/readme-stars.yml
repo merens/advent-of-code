@@ -1,0 +1,19 @@
+name: Update README ⭐
+on:
+  schedule:
+    - cron: "42 */24 * 12 *"  # Every 24 hours at minute 42 in december
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: k2bd/advent-readme-stars@v1
+        with:
+          userId: ${{ secrets.AOC_ID }}
+          leaderboardId: ${{ secrets.AOC_LEADERBOARD }}
+          sessionCookie: ${{ secrets.AOC_SESSION }}
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update README stars
