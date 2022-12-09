@@ -16,15 +16,17 @@ object Day09 {
     println(part2(startingGrid, parseInput(input), knots))
   }
 
-  // grid of booleans( visited by T or not)
+  // grid of booleans(visited by T or not) (0, 0) at top left
   // save position of T and H in two Pos
 
   // assume starting grid 100x100 and start from 50, 50
   private val SIZE                = 500
   // what happens when out of bounds? used a const and increased up to 500
+  // TODO: think of a way to increase the size of the grid and keep the knots coordinates valid
   val startingGrid: Grid[Boolean] = Vector.fill(SIZE, SIZE)(false).updateGrid(Pos(SIZE / 2, SIZE / 2), true)
   val directionsRegex: Regex      = """([URDL]) (\d+)""".r
 
+  // this is a special case of updateKnots
   def updateTail(headPos: Pos, tailPos: Pos, d: String): Pos =
     if (headPos.chebyshevDistance(tailPos) <= 1) tailPos
     else
@@ -36,7 +38,7 @@ object Day09 {
       }
 
   @tailrec
-  def moveDirection(
+  def moveTwoKnots(
     direction: String,
     n: Int,
     headPos: Pos,
@@ -55,7 +57,7 @@ object Day09 {
       }
       val updatedTailPos: Pos        = updateTail(updatedHeadPos, tailPos, direction)
       val updatedGrid: Grid[Boolean] = grid.updateGrid(updatedTailPos, true)
-      moveDirection(direction, n - 1, updatedHeadPos, updatedTailPos, updatedGrid)
+      moveTwoKnots(direction, n - 1, updatedHeadPos, updatedTailPos, updatedGrid)
     }
 
   def part1(
@@ -70,7 +72,7 @@ object Day09 {
         val headPos: Pos        = status._2
         val tailPos: Pos        = status._3
         instruction match {
-          case directionsRegex(d, n) => moveDirection(d, n.toInt, headPos, tailPos, grid)
+          case directionsRegex(d, n) => moveTwoKnots(d, n.toInt, headPos, tailPos, grid)
           case e                     => throw new IllegalArgumentException(s"error parsing $e")
         }
       }
@@ -83,17 +85,14 @@ object Day09 {
     else {
       val movedKnotPos: Pos = {
         val distance: Pos = newHeadPos - knots.head
-        distance match {
-          case Pos(x, y) if x == 0 || y == 0 =>
-            Pos.axisNeighbours.map(_ + knots.head).find(_.chebyshevDistance(newHeadPos) <= 1).get
-          case Pos(x, y)                     => Pos.diagonalNeighbours.map(_ + knots.head).find(_.chebyshevDistance(newHeadPos) <= 1).get
-        }
+        // https://www.reddit.com/r/adventofcode/comments/zgnice/2022_day_9_solutions/izhzxb6/
+        knots.head + distance.sign
       }
       movedKnotPos +: updateKnots(movedKnotPos, knots.tail)
     }
 
   @tailrec
-  def f2(direction: String, n: Int, knots: Seq[Pos], grid: Grid[Boolean]): (Grid[Boolean], Seq[Pos]) =
+  def moveKnots(direction: String, n: Int, knots: Seq[Pos], grid: Grid[Boolean]): (Grid[Boolean], Seq[Pos]) =
     if (n == 0)
       (grid, knots)
     else {
@@ -106,9 +105,10 @@ object Day09 {
       }
       val updatedKnotsPos: Seq[Pos]  = updateKnots(updatedHeadPos, knots.tail)
       val updatedGrid: Grid[Boolean] = grid.updateGrid(updatedKnotsPos.last, true)
-      f2(direction, n - 1, updatedHeadPos +: updatedKnotsPos, updatedGrid)
+      moveKnots(direction, n - 1, updatedHeadPos +: updatedKnotsPos, updatedGrid)
     }
 
+  // TODO: better visualization
   def printGrid(grid: Grid[Boolean], knotsPos: Seq[Pos]): Unit = {
     val set = knotsPos.distinct
     grid.indices
@@ -132,7 +132,7 @@ object Day09 {
         val grid: Grid[Boolean] = status._1
         val knotsPos: Seq[Pos]  = status._2
         instruction match {
-          case directionsRegex(d, n) => f2(d, n.toInt, knotsPos, grid)
+          case directionsRegex(d, n) => moveKnots(d, n.toInt, knotsPos, grid)
           case e                     => throw new IllegalArgumentException(s"error parsing $e")
         }
       }

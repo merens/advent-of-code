@@ -20,6 +20,13 @@ package object utils {
         Math.abs(x - that.x),
         Math.abs(y - that.y)
       )
+
+    def sign: Pos = this match {
+      case Pos(0, 0) => Pos(0, 0)
+      case Pos(x, 0) => Pos(Math.abs(x) / x, 0)
+      case Pos(0, y) => Pos(0, Math.abs(y) / y)
+      case Pos(x, y) => Pos(Math.abs(x) / x, Math.abs(y) / y)
+    }
   }
 
   object Pos {

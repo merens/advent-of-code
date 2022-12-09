@@ -10,6 +10,7 @@ class Day09Test extends AnyFunSuite {
 
   val INPUT: String = "R 4\nU 4\nL 3\nD 1\nR 4\nD 1\nL 5\nR 2"
 
+  // TODO: better tests for movements would have saved me a lot of time
   test("detach head") {
     val headPos: Pos   = Pos(1, 3)
     val tailPos: Pos   = Pos(1, 1)
