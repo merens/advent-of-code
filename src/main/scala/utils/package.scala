@@ -12,6 +12,13 @@ package object utils {
 
   case class Pos(x: Int, y: Int) {
     def +(that: Pos): Pos = Pos(x + that.x, y + that.y)
+
+//    https://en.wikipedia.org/wiki/Chebyshev_distance
+    def chebyshevDistance(that: Pos): Int =
+      Math.max(
+        Math.abs(x - that.x),
+        Math.abs(y - that.y)
+      )
   }
 
   object Pos {
