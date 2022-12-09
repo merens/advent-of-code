@@ -39,4 +39,25 @@ class Day09Test extends AnyFunSuite {
 
     actual shouldBe expected
   }
+
+  test("part 2 result") {
+    val grid: Grid[Boolean]  = Vector.fill(5, 6)(false).updateGrid(Pos(4, 0), true)
+    val startingHeadPos: Pos = Pos(4, 0)
+    val knots: Seq[Pos] = Seq.fill(10)(0).map(_ => startingHeadPos)
+    val actual               = part2(grid, parseInput(INPUT), knots)
+    val expected             = 1
+
+    actual shouldBe expected
+  }
+
+  test("part 2 larger example") {
+    val input2 = "R 5\nU 8\nL 8\nD 3\nR 17\nD 10\nL 25\nU 20"
+    val grid: Grid[Boolean]  = Vector.fill(21, 26)(false).updateGrid(Pos(15, 11), true)
+    val startingHeadPos: Pos = Pos(15, 11)
+    val knots: Seq[Pos] = Seq.fill(10)(0).map(_ => startingHeadPos)
+    val actual               = part2(grid, parseInput(input2), knots)
+    val expected             = 36
+
+    actual shouldBe expected
+  }
 }

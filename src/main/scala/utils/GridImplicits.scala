@@ -11,7 +11,7 @@ object GridImplicits {
     }
 
     def updateGrid(pos: Pos, elem: A): Grid[A] =
-      grid.updated(pos.y, grid(pos.y).updated(pos.x, elem))
+      grid.updated(pos.x, grid(pos.x).updated(pos.y, elem))
 
     def countGrid(p: A => Boolean): Int = grid.map(_.count(p)).sum
   }
