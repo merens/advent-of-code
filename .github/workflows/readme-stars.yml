@@ -1,7 +1,5 @@
 name: Update README ⭐
 on:
-  schedule:
-    - cron: "42 */24 * 12 *"  # Every 24 hours at minute 42 in december
   workflow_dispatch:
 
 jobs:
