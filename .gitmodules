@@ -1,3 +1,4 @@
 [submodule "aoc_input"]
 	path = aoc_input
 	url = https://github.com/merens/aoc_input
+    branch = master
